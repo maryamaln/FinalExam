@@ -10,6 +10,7 @@ class MailItemsController < ApplicationController
   # GET /mail_items/1
   # GET /mail_items/1.json
   def show
+    @mail_items =MailItem.find(params[:id])
   end
 
   # GET /mail_items/new
@@ -19,6 +20,7 @@ class MailItemsController < ApplicationController
 
   # GET /mail_items/1/edit
   def edit
+    @mail_items =MailItem.find(params[:id])
   end
 
   # POST /mail_items
