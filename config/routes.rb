@@ -1,15 +1,16 @@
 Rails.application.routes.draw do
   get 'welcome/index'
 
+  resources :users
   resources :locations
   resources :mail_items
-  resources :users
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
   root 'users#index'
-
+  get 'users/locations' => 'index#locations', :as => :place
   get 'locations/:id', to:'locations#show'
   get 'mail_items/:id', to:'mail_items#show'
   get 'users/:id', to:'users#show'
