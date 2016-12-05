@@ -3,6 +3,8 @@ class Location < ActiveRecord::Base
 	belongs_to :mail_item
 
 	#validations
-	validates_presences_of :latitude
-	validates_presences_of :longitude
+	validates_presence_of :latitude
+	validates_presence_of :longitude
+
+	#scopes
 end

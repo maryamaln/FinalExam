@@ -5,20 +5,27 @@ class MailItem < ActiveRecord::Base
 	belongs_to :user
 
 	#validations
-	validates_presences_of :date_arrived_pittsburgh
-	validates_presences_of :shipping_weight
-	validates_presences_of :sender
+	validates_presence_of :date_arrived_pittsburgh
+	validates_presence_of :shipping_weight
+	validates_presence_of :sender
 
 	#scopes
 	#d
-	scope :arrived_in_qatar, =>(time) {where(Date.today=date_arrived_qatar)}
+	scope :arrivedinqatar, lambda { where("date_arrived_qatar < ?" , Date.today) }
+	
 	#c (given 3 days to ship out of pittsburgh)
-	scope :shipped, =>(time) {where(Date.today=date_arrived_pittsburgh+3)}
+	scope :shippedout, lambda { where("date_arrived_pittsburgh < ?" , Date.today+3)}
+
 	#e that there is a date in the date delivered field
-	scope :delivered, :where => { :date_delivered => true}
+	scope :delivered, lambda { where("date_delivered < ?" , Date.today) }
+	
+
 	#f to view all history but by order of sender for ease
-	scope :alphabeticalbysender, => {order('sender ASC')}
-	#b order by arrival date to pittsburgh if found
-	scope :byarrivaldate, :where => { :date_arrived_pittsburgh => true}
+	scope :shippedallInfo, lambda { where("date_arrived_pittsburgh < ?" , Date.today+3)}
+	
+	#b order by arrival date to pittsburgh if it is after todays date (alreadt arrived)
+	scope :shippedout, lambda { where("date_arrived_pittsburgh < ?" , Date.today)}
+
+
 
 end
